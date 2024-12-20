@@ -1,0 +1,35 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Delete Book{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="text-center text-danger mb-4">Delete Book</h2>
+    <p>Are you sure you want to delete the book titled <strong>{{ object.title }}</strong>?</p>
+    <!-- Trigger for Modal -->
+    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeletionModal">Delete</button>
+    <a href="{% url 'book_list' %}" class="btn btn-secondary">Cancel</a>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmDeletionModal" tabindex="-1" aria-labelledby="confirmDeletionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeletionModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the book titled <strong>{{ object.title }}</strong> by <strong>{{ object.author }}</strong>? Deletion will be permanent.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
